@@ -10,6 +10,10 @@
   <header class="kopf">
     <h1>Aufgabenboard</h1>
     <p class="untertitel">AAM Demo &middot; Everlast Consulting</p>
+    <form class="neue-karte" id="neue-karte-form">
+      <input type="text" id="neue-karte-titel" placeholder="Neue Aufgabe eintragen" autocomplete="off" maxlength="120">
+      <button type="submit">Karte anlegen</button>
+    </form>
   </header>
   <main class="board" id="board">
     <section class="spalte" data-spalte="zu-erledigen">
@@ -25,5 +29,6 @@
       <div class="karten" data-karten="fertig"></div>
     </section>
   </main>
+  <script type="module" src="app.js"></script>
 </body>
 </html>
