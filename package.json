@@ -1,0 +1,7 @@
+{
+  "name": "aam-demo-trello",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Aufgabenboard als Git-Mechanik-Demo fuer AAM Session 38"
+}

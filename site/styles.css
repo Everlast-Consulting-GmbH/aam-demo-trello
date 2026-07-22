@@ -1,0 +1,42 @@
+/* Aufgabenboard - AAM Demo, Everlast-Look: dunkel mit gelben Akzenten */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #0f1115;
+  color: #e8eaf0;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  min-height: 100vh;
+}
+
+.kopf {
+  padding: 28px 36px 18px;
+  border-bottom: 1px solid #23262e;
+}
+
+.kopf h1 {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.kopf h1::before {
+  content: "";
+  display: inline-block;
+  width: 10px;
+  height: 26px;
+  background: #ffd60a;
+  border-radius: 3px;
+  margin-right: 14px;
+  vertical-align: -4px;
+}
+
+.untertitel {
+  color: #8a8f9c;
+  font-size: 14px;
+  margin-top: 6px;
+}
