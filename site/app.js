@@ -24,7 +24,8 @@ const titelEingabe = document.getElementById("neue-karte-titel");
 
 formular.addEventListener("submit", (ereignis) => {
   ereignis.preventDefault();
-  board = karteAnlegen(board, "zu-erledigen", titelEingabe.value);
+  const farbe = formular.querySelector('input[name="karten-farbe"]:checked')?.value;
+  board = karteAnlegen(board, "zu-erledigen", titelEingabe.value, farbe);
   titelEingabe.value = "";
   titelEingabe.focus();
   speichern();
@@ -66,7 +67,7 @@ function rendern() {
 
 function karteAlsElement(karte) {
   const element = document.createElement("article");
-  element.className = "karte";
+  element.className = "karte farbe-" + (karte.farbe ?? "grau");
   element.dataset.karteId = karte.id;
   element.draggable = true;
 
