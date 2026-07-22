@@ -14,13 +14,16 @@ ansehen kann.
 
 ## Lokal starten
 
-Es gibt keinen Build-Schritt. Einfach die Startseite im Browser öffnen:
+Es gibt keinen Build-Schritt, nur einen kleinen lokalen Webserver (weil der Browser
+JavaScript-Module nicht direkt aus einer Datei laden darf):
 
 ```
 git clone https://github.com/Everlast-Consulting-GmbH/aam-demo-trello.git
 cd aam-demo-trello
-open site/index.html
+python3 -m http.server 8080 --directory site
 ```
+
+Danach http://localhost:8080 im Browser öffnen.
 
 ## Tests ausführen
 

@@ -120,6 +120,15 @@ body {
   outline: 1px dashed #ffd60a;
 }
 
+/* Leerzustand: dezenter Hinweis, solange eine Spalte keine Karten hat */
+.karten:empty::after {
+  content: "Noch keine Karten";
+  color: #565c69;
+  display: block;
+  font-size: 13px;
+  padding: 8px 2px;
+}
+
 .board {
   display: grid;
   grid-template-columns: repeat(3, minmax(260px, 1fr));
