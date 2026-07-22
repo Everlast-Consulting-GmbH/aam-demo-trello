@@ -3,5 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Aufgabenboard als Git-Mechanik-Demo fuer AAM Session 38"
+  "description": "Aufgabenboard als Git-Mechanik-Demo fuer AAM Session 38",
+  "scripts": {
+    "test": "node --test tests/*.test.js"
+  }
 }
