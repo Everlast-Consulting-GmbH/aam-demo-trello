@@ -40,3 +40,41 @@ body {
   font-size: 14px;
   margin-top: 6px;
 }
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(260px, 1fr));
+  gap: 20px;
+  padding: 28px 36px;
+  max-width: 1200px;
+}
+
+.spalte {
+  background: #15181e;
+  border: 1px solid #23262e;
+  border-radius: 12px;
+  padding: 16px;
+  min-height: 320px;
+}
+
+.spalte h2 {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: #ffd60a;
+  margin-bottom: 14px;
+}
+
+.karten {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 200px;
+}
+
+@media (max-width: 860px) {
+  .board {
+    grid-template-columns: 1fr;
+  }
+}
