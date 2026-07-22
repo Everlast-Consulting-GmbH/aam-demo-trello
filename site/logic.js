@@ -64,6 +64,35 @@ export function karteFinden(board, karteId) {
   return null;
 }
 
+// Macht aus dem Board einen Text, der sich im Browser speichern lässt.
+export function boardSerialisieren(board) {
+  return JSON.stringify(board);
+}
+
+// Liest ein gespeichertes Board wieder ein.
+// Kaputte oder fremde Daten führen bewusst zu einem leeren Board statt zu einem Fehler.
+export function boardDeserialisieren(text) {
+  let daten;
+  try {
+    daten = JSON.parse(text);
+  } catch {
+    return leeresBoard();
+  }
+  if (typeof daten !== "object" || daten === null) {
+    return leeresBoard();
+  }
+  const board = leeresBoard();
+  for (const spalte of SPALTEN) {
+    if (!Array.isArray(daten[spalte])) {
+      continue;
+    }
+    board[spalte] = daten[spalte]
+      .filter((karte) => karte && typeof karte.id === "string" && typeof karte.titel === "string")
+      .map((karte) => ({ id: karte.id, titel: karte.titel }));
+  }
+  return board;
+}
+
 function boardKopieren(board) {
   const kopie = leeresBoard();
   for (const spalte of SPALTEN) {

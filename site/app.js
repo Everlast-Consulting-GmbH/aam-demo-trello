@@ -3,13 +3,21 @@
 
 import {
   SPALTEN,
-  leeresBoard,
   karteAnlegen,
   karteVerschieben,
   karteLoeschen,
+  boardSerialisieren,
+  boardDeserialisieren,
 } from "./logic.js";
 
-let board = leeresBoard();
+const SPEICHER_SCHLUESSEL = "aam-demo-aufgabenboard";
+
+// Beim Start das zuletzt gespeicherte Board laden (oder leer beginnen).
+let board = boardDeserialisieren(localStorage.getItem(SPEICHER_SCHLUESSEL));
+
+function speichern() {
+  localStorage.setItem(SPEICHER_SCHLUESSEL, boardSerialisieren(board));
+}
 
 const formular = document.getElementById("neue-karte-form");
 const titelEingabe = document.getElementById("neue-karte-titel");
@@ -19,6 +27,7 @@ formular.addEventListener("submit", (ereignis) => {
   board = karteAnlegen(board, "zu-erledigen", titelEingabe.value);
   titelEingabe.value = "";
   titelEingabe.focus();
+  speichern();
   rendern();
 });
 
@@ -40,6 +49,7 @@ for (const spalte of SPALTEN) {
     behaelter.classList.remove("ablage-aktiv");
     const karteId = ereignis.dataTransfer.getData("text/plain");
     board = karteVerschieben(board, karteId, spalte);
+    speichern();
     rendern();
   });
 }
@@ -83,6 +93,7 @@ function karteAlsElement(karte) {
   loeschKnopf.textContent = "×";
   loeschKnopf.addEventListener("click", () => {
     board = karteLoeschen(board, karte.id);
+    speichern();
     rendern();
   });
   element.appendChild(loeschKnopf);
