@@ -4,6 +4,9 @@
 
 export const SPALTEN = ["zu-erledigen", "in-arbeit", "fertig"];
 
+// Die wählbaren Kartenfarben. "grau" ist der neutrale Standard.
+export const KARTEN_FARBEN = ["grau", "blau", "gruen", "gelb"];
+
 // Ein leeres Board: drei Spalten, keine Karten.
 export function leeresBoard() {
   return {
@@ -14,15 +17,20 @@ export function leeresBoard() {
 }
 
 // Legt eine neue Karte in einer Spalte an und gibt ein NEUES Board zurück.
-// Leere Titel und unbekannte Spalten werden ignoriert.
-export function karteAnlegen(board, spalte, titel, id = neueId()) {
+// Leere Titel und unbekannte Spalten werden ignoriert,
+// unbekannte Farben fallen auf den Standard "grau" zurück.
+export function karteAnlegen(board, spalte, titel, farbe = "grau", id = neueId()) {
   const text = String(titel ?? "").trim();
   if (!SPALTEN.includes(spalte) || text === "") {
     return board;
   }
   const neu = boardKopieren(board);
-  neu[spalte].push({ id, titel: text });
+  neu[spalte].push({ id, titel: text, farbe: farbeOderStandard(farbe) });
   return neu;
+}
+
+function farbeOderStandard(farbe) {
+  return KARTEN_FARBEN.includes(farbe) ? farbe : "grau";
 }
 
 // Verschiebt eine Karte in eine andere Spalte (ans Ende) und gibt ein NEUES Board zurück.
@@ -88,7 +96,7 @@ export function boardDeserialisieren(text) {
     }
     board[spalte] = daten[spalte]
       .filter((karte) => karte && typeof karte.id === "string" && typeof karte.titel === "string")
-      .map((karte) => ({ id: karte.id, titel: karte.titel }));
+      .map((karte) => ({ id: karte.id, titel: karte.titel, farbe: farbeOderStandard(karte.farbe) }));
   }
   return board;
 }

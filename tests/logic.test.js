@@ -14,7 +14,7 @@ import {
 } from "../site/logic.js";
 
 test("karteAnlegen legt eine Karte in der richtigen Spalte an", () => {
-  const board = karteAnlegen(leeresBoard(), "zu-erledigen", "Angebot schreiben", "karte-1");
+  const board = karteAnlegen(leeresBoard(), "zu-erledigen", "Angebot schreiben", "grau", "karte-1");
 
   assert.equal(board["zu-erledigen"].length, 1);
   assert.equal(board["zu-erledigen"][0].titel, "Angebot schreiben");
@@ -29,35 +29,51 @@ test("karteAnlegen ignoriert leere Titel und verändert das alte Board nicht", (
   assert.equal(nachher["zu-erledigen"].length, 0);
 
   // Reine Funktion: das Original bleibt unangetastet.
-  const mitKarte = karteAnlegen(vorher, "zu-erledigen", "Test", "karte-1");
+  const mitKarte = karteAnlegen(vorher, "zu-erledigen", "Test", "grau", "karte-1");
   assert.equal(vorher["zu-erledigen"].length, 0);
   assert.equal(mitKarte["zu-erledigen"].length, 1);
 });
 
+test("karteAnlegen speichert die gewählte Farbe an der Karte", () => {
+  const board = karteAnlegen(leeresBoard(), "zu-erledigen", "Wichtige Aufgabe", "gelb", "karte-1");
+
+  assert.equal(board["zu-erledigen"][0].farbe, "gelb");
+});
+
+test("karteAnlegen fällt bei unbekannter Farbe auf grau zurück", () => {
+  const ohneFarbe = karteAnlegen(leeresBoard(), "zu-erledigen", "Ohne Farbwunsch");
+  const kaputteFarbe = karteAnlegen(leeresBoard(), "zu-erledigen", "Neonpink bitte", "neonpink");
+
+  assert.equal(ohneFarbe["zu-erledigen"][0].farbe, "grau");
+  assert.equal(kaputteFarbe["zu-erledigen"][0].farbe, "grau");
+});
+
 test("karteVerschieben bewegt eine Karte von Zu erledigen nach In Arbeit", () => {
-  let board = karteAnlegen(leeresBoard(), "zu-erledigen", "Rechnung prüfen", "karte-1");
+  let board = karteAnlegen(leeresBoard(), "zu-erledigen", "Rechnung prüfen", "blau", "karte-1");
   board = karteVerschieben(board, "karte-1", "in-arbeit");
 
   assert.equal(board["zu-erledigen"].length, 0);
   assert.equal(board["in-arbeit"].length, 1);
   assert.equal(board["in-arbeit"][0].titel, "Rechnung prüfen");
+  assert.equal(board["in-arbeit"][0].farbe, "blau");
 });
 
 test("karteLoeschen entfernt genau die richtige Karte", () => {
-  let board = karteAnlegen(leeresBoard(), "zu-erledigen", "Bleibt", "karte-1");
-  board = karteAnlegen(board, "zu-erledigen", "Fliegt raus", "karte-2");
+  let board = karteAnlegen(leeresBoard(), "zu-erledigen", "Bleibt", "grau", "karte-1");
+  board = karteAnlegen(board, "zu-erledigen", "Fliegt raus", "grau", "karte-2");
   board = karteLoeschen(board, "karte-2");
 
   assert.equal(board["zu-erledigen"].length, 1);
   assert.equal(board["zu-erledigen"][0].id, "karte-1");
 });
 
-test("Serialisieren und Deserialisieren ergeben dasselbe Board", () => {
-  let board = karteAnlegen(leeresBoard(), "zu-erledigen", "Backup einrichten", "karte-1");
+test("Serialisieren und Deserialisieren ergeben dasselbe Board (inklusive Farbe)", () => {
+  let board = karteAnlegen(leeresBoard(), "zu-erledigen", "Backup einrichten", "gruen", "karte-1");
   board = karteVerschieben(board, "karte-1", "fertig");
 
   const wiederhergestellt = boardDeserialisieren(boardSerialisieren(board));
   assert.deepEqual(wiederhergestellt, board);
+  assert.equal(wiederhergestellt["fertig"][0].farbe, "gruen");
 });
 
 test("boardDeserialisieren fängt kaputte Daten ab und liefert ein leeres Board", () => {

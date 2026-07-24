@@ -63,6 +63,42 @@ body {
   outline-offset: -1px;
 }
 
+.farbwahl {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+}
+
+.farbwahl input {
+  height: 0;
+  opacity: 0;
+  position: absolute;
+  width: 0;
+}
+
+.punkt {
+  border-radius: 50%;
+  cursor: pointer;
+  display: block;
+  height: 18px;
+  width: 18px;
+}
+
+.punkt-grau { background: #6b7280; }
+.punkt-blau { background: #5b8def; }
+.punkt-gruen { background: #4cae6e; }
+.punkt-gelb { background: #ffd60a; }
+
+.farbwahl input:checked + .punkt {
+  outline: 2px solid #e8eaf0;
+  outline-offset: 2px;
+}
+
+.karte.farbe-grau { border-left: 4px solid #6b7280; }
+.karte.farbe-blau { border-left: 4px solid #5b8def; }
+.karte.farbe-gruen { border-left: 4px solid #4cae6e; }
+.karte.farbe-gelb { border-left: 4px solid #ffd60a; }
+
 .neue-karte button {
   background: #ffd60a;
   border: none;

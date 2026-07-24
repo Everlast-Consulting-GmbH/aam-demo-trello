@@ -12,6 +12,12 @@
     <p class="untertitel">AAM Demo &middot; Everlast Consulting</p>
     <form class="neue-karte" id="neue-karte-form">
       <input type="text" id="neue-karte-titel" placeholder="Neue Aufgabe eintragen" autocomplete="off" maxlength="120">
+      <div class="farbwahl" role="radiogroup" aria-label="Kartenfarbe">
+        <label class="farbe" title="Grau"><input type="radio" name="karten-farbe" value="grau" checked><span class="punkt punkt-grau"></span></label>
+        <label class="farbe" title="Blau"><input type="radio" name="karten-farbe" value="blau"><span class="punkt punkt-blau"></span></label>
+        <label class="farbe" title="Grün"><input type="radio" name="karten-farbe" value="gruen"><span class="punkt punkt-gruen"></span></label>
+        <label class="farbe" title="Gelb"><input type="radio" name="karten-farbe" value="gelb"><span class="punkt punkt-gelb"></span></label>
+      </div>
       <button type="submit">Karte anlegen</button>
     </form>
   </header>
